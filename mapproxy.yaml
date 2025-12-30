@@ -1,42 +1,130 @@
-# 2025.06.05 - Lade till Mariehamn 1952
-
 services:
 #  demo:
+
   wmts:
+    md:
+      contact:
+        person: Kim Alm
+        email: mapproxy@kea.penti.org
+
   wms:
     srs: ['EPSG:3857']
+    md:
+      contact:
+        person: Kim Alm
+        email: mapproxy@kea.penti.org
+
+# Kartorna reprojecteras till EPSG:3857
 
 layers:
-  - name: orto1944_EPSG3857
-    title: Orto 1944 reprojected to EPSG:3857
-    sources: [orto1944_cache]
+  - name: aland-orto-1952
+    title: Mariehamn orto 1952
+    sources: [Åland_1952_cache]
 
-  - name: orto1954_EPSG3857
-    title: Orto 1954 reprojected to EPSG:3857
-    sources: [orto1954_cache]
+  - name: aland-orto-1982
+    title: Åland orto 1982
+    sources: [Åland_1982_cache]
 
-  - name: aland1952_EPSG3857
-    title: Åland 1952 reprojected to EPSG:3857
-    sources: [aland1952_cache]
+  - name: hango-orto-1950
+    title: Hangö orto 1950
+    sources: [Hangö_1950_cache]
+
+  - name: porkala-orto-1944
+    title: Porkala orto 1944
+    sources: [Porkala_1944_cache]
+
+  - name: porkala-orto-1956
+    title: Porkala orto 1956
+    sources: [Porkala_1956_cache]
+
+  - name: porkala-fastighetsbeteckningar
+    title: Porkala Fastighetsbeteckningar
+    sources: [Porkala_Fastighetsbeteckningar_cache]
+
+  - name: porkala-fastighetsgranser
+    title: Porkala Fastighetsgränser
+    sources: [Porkala_Fastighetsgränser_cache]
 
 caches:
-  orto1944_cache:
+  Åland_1952_cache:
     grids: [webmercator]
-    sources: [orto1944_src]
+    sources: [Åland_1952_src]
     format: image/png
 
-  orto1954_cache:
+  Åland_1982_cache:
     grids: [webmercator]
-    sources: [orto1954_src]
+    sources: [Åland_1982_src]
     format: image/png
 
-  aland1952_cache:
+  Hangö_1950_cache:
     grids: [webmercator]
-    sources: [aland1952_src]
+    sources: [Hangö_1950_src]
+    format: image/png
+
+  Porkala_1944_cache:
+    grids: [webmercator]
+    sources: [Porkala_1944_src]
+    format: image/png
+
+  Porkala_1956_cache:
+    grids: [webmercator]
+    sources: [Porkala_1956_src]
+    format: image/png
+
+  Porkala_Fastighetsbeteckningar_cache:
+    grids: [webmercator]
+    sources: [Porkala_Fastighetsbeteckningar_src]
+    format: image/png
+
+  Porkala_Fastighetsgränser_cache:
+    grids: [webmercator]
+    sources: [Porkala_Fastighetsgränser_src]
     format: image/png
 
 sources:
-  orto1944_src:
+  Åland_1952_src:
+    type: wms
+    req:
+      url: https://asiointi-karttakuva.maanmittauslaitos.fi/asiointi/service/wms
+      layers: public:ortokuva_aikasarja
+      transparent: true
+      format: image/png
+      styles: ''
+      time: '1952-01-01T00:00:00.000Z/1952-12-31T23:59:59.999Z'
+    coverage:
+      srs: 'EPSG:3067'
+      bbox: [105259, 6677899, 113028, 6691774]
+    supported_srs: ['EPSG:3067']
+
+  Åland_1982_src:
+    type: wms
+    req:
+      url: https://asiointi-karttakuva.maanmittauslaitos.fi/asiointi/service/wms
+      layers: public:ortokuva_aikasarja
+      transparent: true
+      format: image/png
+      styles: ''
+      time: '1982-01-01T00:00:00.000Z/1982-12-31T23:59:59.999Z'
+    coverage:
+      srs: 'EPSG:3067'
+      bbox: [105259, 6677899, 113028, 6691774]
+    supported_srs: ['EPSG:3067']
+
+  Hangö_1950_src:
+    type: wms
+    req:
+      url: https://asiointi-karttakuva.maanmittauslaitos.fi/asiointi/service/wms
+      layers: public:ortokuva_aikasarja
+      transparent: true
+      format: image/png
+      styles: ''
+      time: '1950-01-01T00:00:00.000Z/1950-12-31T23:59:59.999Z'
+    coverage:
+      srs: 'EPSG:3067'
+      bbox: [263818, 6635808, 298045, 6656800]
+    supported_srs: ['EPSG:3067']
+
+  Porkala_1944_src:
     type: wms
     req:
       url: https://asiointi-karttakuva.maanmittauslaitos.fi/asiointi/service/wms
@@ -50,7 +138,7 @@ sources:
       bbox: [324942, 6643508, 371150, 6679858]
     supported_srs: ['EPSG:3067']
 
-  orto1954_src:
+  Porkala_1956_src:
     type: wms
     req:
       url: https://asiointi-karttakuva.maanmittauslaitos.fi/asiointi/service/wms
@@ -64,28 +152,43 @@ sources:
       bbox: [324942, 6643508, 371150, 6679858]
     supported_srs: ['EPSG:3067']
 
-  aland1952_src:
+  Porkala_Fastighetsbeteckningar_src:
     type: wms
     req:
       url: https://asiointi-karttakuva.maanmittauslaitos.fi/asiointi/service/wms
-      layers: public:ortokuva_aikasarja
+      layers: public:kiinteistotunnukset
+      styles: default
       transparent: true
       format: image/png
-      styles: ''
-      time: '1952-01-01T00:00:00.000Z/1952-12-31T23:59:59.999Z'
+      version: 1.1.1
     coverage:
       srs: 'EPSG:3067'
-      bbox: [105259, 6677899, 113028, 6691774]
-     # bbox: [107296, 6683648, 107808, 6684160]
-     # bbox: [118000, 6645000, 136000, 6680000]
+      bbox: [324942, 6643508, 371150, 6679858]
+    supported_srs: ['EPSG:3067']
+
+  Porkala_Fastighetsgränser_src:
+    type: wms
+    req:
+      url: https://asiointi-karttakuva.maanmittauslaitos.fi/asiointi/service/wms
+      layers: public:kiinteistojaotus
+      styles: default
+      transparent: true
+      format: image/png
+      version: 1.1.1
+    coverage:
+      srs: 'EPSG:3067'
+      bbox: [324942, 6643508, 371150, 6679858]
     supported_srs: ['EPSG:3067']
 
 grids:
   webmercator:
     base: GLOBAL_WEBMERCATOR
     origin: nw
+    min_res: 2445.9849
+#    levels: [6,7,8,9,10,11,12,13,14,15,16]
 
 globals:
   cache:
-    base_dir: '/opt/mapproxy/cache_data'
-    lock_dir: '/opt/mapproxy/cache_data/locks'
+    base_dir: '/home/mapproxy/cache_data'
+    lock_dir: '/home/mapproxy/cache_data/locks'
+    
